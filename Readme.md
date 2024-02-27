@@ -7,7 +7,7 @@
 
 -----------------------
 
-[![Build](https://github.com/TinyTinni/QtDuckDBDriver/actions/workflows/cmake.yml/badge.svg)](https://github.com/TinyTinni/FairyCam/actions/workflows/build.yml)  
+[![Build](https://github.com/TinyTinni/FairyCam/actions/workflows/build.yml/badge.svg)](https://github.com/TinyTinni/FairyCam/actions/workflows/build.yml)  
 
 Camera Stubs for OpenCV's camera class [`cv::VideoCapture`](https://docs.opencv.org/4.9.0/d8/dfe/classcv_1_1VideoCapture.html).
 
