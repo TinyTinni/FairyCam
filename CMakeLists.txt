@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.20)
 set(PROJECT_VERSION 1.0.0)
 project(FairyCam LANGUAGES CXX VERSION ${PROJECT_VERSION})
 
-option (FAIRYCAM_ENABLE_TESTING ON "Create Testing targets")
+option (FAIRYCAM_ENABLE_TESTING "Create Testing targets" ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-####### 
+#######
 # dependencies
 
 # Poco
