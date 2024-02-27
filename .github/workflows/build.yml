@@ -1,0 +1,72 @@
+name: ci
+on:
+  pull_request:
+  release:
+    types: [published]
+  push:
+    tags:
+    branches:
+      - main
+      - master
+
+jobs:
+  Test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          #- macos-latest
+          #- windows-2022
+        compiler:
+          # you can specify the version after `-` like "llvm-15.0.2".
+          - llvm-17
+          - gcc-13
+        generator:
+          - "Ninja Multi-Config"
+        build_type:
+          - Release
+        include:
+          # Windows msvc builds
+          - os: windows-latest
+            compiler: msvc
+            generator: "Visual Studio 17 2022"
+            build_type: Release
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies (linux)
+        run: sudo apt install ninja-build libopencv-dev libpoco-dev
+        if: matrix.os == 'ubuntu-latest'
+      - name: Install dependencies (windows)
+        run: |
+          choco install opencv --package-parameters '/InstallationPath:C:\opencv /Environment'
+          echo "C:\opencv\opencv\build\x64\vc16\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          dir C:\opencv\opencv\build
+          dir C:\opencv\opencv\build\bin
+        if: matrix.os == 'windows-latest'
+
+      - name: Setup Cpp
+        uses: aminya/setup-cpp@v1
+        with:
+          compiler: ${{ matrix.compiler }}
+          vcvarsall: ${{ contains(matrix.os, 'windows' )}}
+
+      - name: Configure CMake (windows)
+        run: |
+          cmake -S . -B ./build -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} -DOpenCV_DIR="C:/opencv/opencv/build/" 
+        if: matrix.os == 'windows-latest'
+
+      - name: Configure CMake (linux)
+        run: |
+          cmake -S . -B ./build -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: Build
+        # Execute the build.  You can specify a specific target with "--target <NAME>"
+        run: |
+          cmake --build ./build --config ${{matrix.build_type}}
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: ctest -C ${{matrix.build_type}} --output-on-failure
