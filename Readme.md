@@ -131,7 +131,7 @@ You can also add custom exceptions and weight them
 ```cpp
 AnyCamera camera = ...;
 ChaosCamera chaos_cam(std::move(camera), 
-    RandomSequence({.isOpen = BernoulliSequence::Fail(0.5).
+    BernoulliSequence({.isOpen = BernoulliSequence::Fail(0.5).
         with<MyException>(5).
         with<MySecondException>(0.5) })); 
         // "isOpen will fail 50% of the time.
