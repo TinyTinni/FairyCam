@@ -64,10 +64,9 @@ int main()
     using namespace FairyCam;
     if (config::isTestingEnabled())
     {
-        auto opts = FileCamera::Options{.files={"myFile1.png""differentFile.jpg"}};
-        return startSystem(AnyCamera::create<FileCamera>(std::move(opts)));
+        return startSystem(FileCamera({.files={"myFile1.png", "differentFile.jpg"}));
     }
-    return startSystem(AnyCamera::create<cv::VideoCapture>());
+    return startSystem(cv::VideoCapture());
 }
 
 
@@ -103,7 +102,7 @@ int main()
     
     if (config::isTestingEnabled())
     {
-        return startSystem(FairyCamera::HttpCamera());
+        return startSystem(FileCamera({.files={"myFile1.png", "differentFile.jpg"}));
     }
     return startSystem(cv::VideoCapture());
 }

@@ -14,8 +14,7 @@ TEST_SUITE("DirectoryTriggerCamera")
 {
     TEST_CASE("invalid directory")
     {
-        AnyCamera cam = AnyCamera::create<DirectoryTriggerCamera>(
-            DirectoryTriggerCamera::Options{.dir = ""});
+        AnyCamera cam(AnyCamera::create<DirectoryTriggerCamera>({.dir = ""}));
 
         CHECK_FALSE(cam.open(0, 0, {}));
         CHECK_FALSE(cam.isOpened());
@@ -27,9 +26,8 @@ TEST_SUITE("DirectoryTriggerCamera")
 
     TEST_CASE("existing directory without new images")
     {
-        AnyCamera cam = AnyCamera::create<DirectoryTriggerCamera>(
-            DirectoryTriggerCamera::Options{.dir = TEST_DATA,
-                                            .grabTimeOutMs = 0});
+        AnyCamera cam(AnyCamera::create<DirectoryTriggerCamera>(
+            {.dir = TEST_DATA, .grabTimeOutMs = 0}));
 
         CHECK(cam.open(0, 0, {}));
         CHECK(cam.isOpened());
@@ -60,9 +58,8 @@ TEST_SUITE("DirectoryTriggerCamera")
             Remover cleanup{.dir = new_dir};
             REQUIRE(std::filesystem::create_directories(new_dir));
 
-            AnyCamera cam = AnyCamera::create<DirectoryTriggerCamera>(
-                DirectoryTriggerCamera::Options{.dir = new_dir,
-                                                .grabTimeOutMs = 50});
+            AnyCamera cam(AnyCamera::create<DirectoryTriggerCamera>(
+                {.dir = new_dir, .grabTimeOutMs = 50}));
 
             CHECK(cam.open(0, 0, {}));
             CHECK(cam.isOpened());

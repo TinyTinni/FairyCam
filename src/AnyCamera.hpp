@@ -122,6 +122,12 @@ class AnyCamera
     }
 
     template <IsAnyCamera CameraType>
+    static AnyCamera create(typename CameraType::Options opts)
+    {
+        return AnyCamera(std::make_unique<Model<CameraType>>(std::move(opts)));
+    }
+
+    template <IsAnyCamera CameraType>
     std::optional<std::reference_wrapper<CameraType>> dynamicCast() noexcept
     {
         auto modelPtr = dynamic_cast<Model<CameraType> *>(m_camera.get());
