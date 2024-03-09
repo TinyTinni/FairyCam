@@ -19,6 +19,8 @@ The intention of this library is to make automatic testing possible without rely
 
 - `AnyCamera`: can hold any `cv::VideoCapture` interface compatible camera.
 
+- `MemoryCamera`: grabs images from a defined vector of images wich are already loaded in memory. Returns an empty image and error when the sequence was reached the end, or, when the `circular` option is enabled, starts from the start of the sequence again.
+
 - `FileCamera`: grabs images from a provided sequence of paths. Returns an empty image and error when the sequence was reached the end, or, when the `circular` option is enabled, starts from the start of the sequence again.
 
 - `DirectoryCamera` : grabs images from a provided directory. Returns an empty image anderror when the all images in the directory were shown once. When the `circular` option is enabled, the images in the directory are shown endlessly.
