@@ -11,9 +11,8 @@ TEST_SUITE("DirectoryCamera")
         for (const bool circular : std::vector{false, true})
         {
             CAPTURE(circular);
-            AnyCamera cam =
-                AnyCamera::create<DirectoryCamera>(DirectoryCamera::Options{
-                    .dir = TEST_DATA, .circular = circular});
+            AnyCamera cam(
+                DirectoryCamera({.dir = TEST_DATA, .circular = circular}));
 
             REQUIRE(cam.open(0, 0, {}));
 
@@ -44,8 +43,7 @@ TEST_SUITE("DirectoryCamera")
                  "", TEST_DATA "/doesnotexists/", TEST_DATA "/test.png"})
         {
             CAPTURE(dir);
-            AnyCamera cam = AnyCamera::create<DirectoryCamera>(
-                DirectoryCamera::Options{.dir = dir});
+            AnyCamera cam(DirectoryCamera({.dir = dir}));
 
             REQUIRE_FALSE(cam.open(0, 0, {}));
             CHECK_FALSE(cam.isOpened());

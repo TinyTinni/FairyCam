@@ -53,8 +53,8 @@ TEST_SUITE("HttpCamera")
 {
     TEST_CASE("close and reopen")
     {
-        AnyCamera cam = AnyCamera::create<HttpCamera>(
-            HttpCamera::Options{.port = getPort(), .grabTimeOutMs = 0});
+        AnyCamera cam(AnyCamera::create<HttpCamera>(
+            {.port = getPort(), .grabTimeOutMs = 0}));
 
         REQUIRE(cam.open(0, 0, {}));
         REQUIRE(cam.isOpened());
@@ -72,10 +72,9 @@ TEST_SUITE("HttpCamera")
     TEST_CASE("release queue")
     {
         const auto port = getPort();
-        AnyCamera cam = AnyCamera::create<HttpCamera>(
-            HttpCamera::Options{.port = port, .grabTimeOutMs = 0});
-        Poco::Net::HTTPClientSession client =
-            Poco::Net::HTTPClientSession("127.0.0.1", port);
+        AnyCamera cam(
+            AnyCamera::create<HttpCamera>({.port = port, .grabTimeOutMs = 0}));
+        Poco::Net::HTTPClientSession client("127.0.0.1", port);
 
         REQUIRE(cam.open(0, 0, {}));
         REQUIRE(cam.isOpened());
@@ -96,10 +95,9 @@ TEST_SUITE("HttpCamera")
         {
             CAPTURE(n_images);
             const auto port = getPort();
-            AnyCamera cam = AnyCamera::create<HttpCamera>(
-                HttpCamera::Options{.port = port, .grabTimeOutMs = 0});
-            Poco::Net::HTTPClientSession client =
-                Poco::Net::HTTPClientSession("127.0.0.1", port);
+            AnyCamera cam(AnyCamera::create<HttpCamera>(
+                {.port = port, .grabTimeOutMs = 0}));
+            Poco::Net::HTTPClientSession client("127.0.0.1", port);
 
             REQUIRE(cam.open(0, 0, {}));
             REQUIRE(cam.isOpened());
@@ -125,10 +123,9 @@ TEST_SUITE("HttpCamera")
         {
             CAPTURE(n_images);
             const auto port = getPort();
-            AnyCamera cam = AnyCamera::create<HttpCamera>(
-                HttpCamera::Options{.port = port, .grabTimeOutMs = 0});
-            Poco::Net::HTTPClientSession client =
-                Poco::Net::HTTPClientSession("127.0.0.1", port);
+            AnyCamera cam(AnyCamera::create<HttpCamera>(
+                {.port = port, .grabTimeOutMs = 0}));
+            Poco::Net::HTTPClientSession client("127.0.0.1", port);
 
             REQUIRE(cam.open(0, 0, {}));
             REQUIRE(cam.isOpened());
@@ -151,10 +148,9 @@ TEST_SUITE("HttpCamera")
         {
             CAPTURE(n_images);
             const auto port = getPort();
-            AnyCamera cam = AnyCamera::create<HttpCamera>(
-                HttpCamera::Options{.port = port, .grabTimeOutMs = 0});
-            Poco::Net::HTTPClientSession client =
-                Poco::Net::HTTPClientSession("127.0.0.1", port);
+            AnyCamera cam(AnyCamera::create<HttpCamera>(
+                {.port = port, .grabTimeOutMs = 0}));
+            Poco::Net::HTTPClientSession client("127.0.0.1", port);
 
             REQUIRE(cam.open(0, 0, {}));
             REQUIRE(cam.isOpened());
@@ -185,10 +181,9 @@ TEST_SUITE("HttpCamera")
         {
             CAPTURE(n_images);
             const auto port = getPort();
-            AnyCamera cam = AnyCamera::create<HttpCamera>(
-                HttpCamera::Options{.port = port, .grabTimeOutMs = 0});
-            Poco::Net::HTTPClientSession client =
-                Poco::Net::HTTPClientSession("127.0.0.1", port);
+            AnyCamera cam(AnyCamera::create<HttpCamera>(
+                {.port = port, .grabTimeOutMs = 0}));
+            Poco::Net::HTTPClientSession client("127.0.0.1", port);
 
             REQUIRE(cam.open(0, 0, {}));
             REQUIRE(cam.isOpened());

@@ -1,18 +1,19 @@
 #include <AnyCamera.hpp>
-#include <FileCamera.hpp>
+#include <MemoryCamera.hpp>
 #include <doctest.h>
+#include <opencv2/core.hpp>
 
 using namespace FairyCam;
 
-TEST_SUITE("FileCamera")
+TEST_SUITE("MemoryCamera")
 {
     TEST_CASE("load image")
     {
         for (const bool circular : std::vector{false, true})
         {
             CAPTURE(circular);
-            AnyCamera cam(FileCamera(
-                {.files = {TEST_DATA "test.png"}, .circular = circular}));
+            AnyCamera cam(MemoryCamera(
+                {.images = {cv::Mat(1, 1, CV_8UC1)}, .circular = circular}));
 
             REQUIRE(cam.open(0, 0, {}));
 
@@ -38,19 +39,13 @@ TEST_SUITE("FileCamera")
 
     TEST_CASE("load not existing image")
     {
-        for (auto images : std::vector{
-                 std::vector<std::string>(), std::vector<std::string>{""},
-                 std::vector<std::string>{TEST_DATA "doesnotexists.png"}})
-        {
-            CAPTURE(images);
-            AnyCamera cam(FileCamera({.files = std::move(images)}));
+        AnyCamera cam(MemoryCamera({.images = std::vector{cv::Mat()}}));
 
-            REQUIRE(cam.open(0, 0, {}));
-            CHECK(cam.isOpened());
-            cv::Mat m;
-            REQUIRE_FALSE(cam.read(m));
-            CHECK(m.empty());
-        }
+        REQUIRE(cam.open(0, 0, {}));
+        CHECK(cam.isOpened());
+        cv::Mat m;
+        REQUIRE_FALSE(cam.read(m));
+        CHECK(m.empty());
     }
 
     TEST_CASE("load multiple images")
@@ -58,9 +53,9 @@ TEST_SUITE("FileCamera")
         for (const bool circular : std::vector{false, true})
         {
             CAPTURE(circular);
-            AnyCamera cam(FileCamera(
-                {.files = {TEST_DATA "test.png", TEST_DATA "test.png",
-                           TEST_DATA "", TEST_DATA "test.png"},
+            AnyCamera cam(MemoryCamera(
+                {.images = {cv::Mat(1, 1, CV_8UC1), cv::Mat(1, 1, CV_8UC1),
+                            cv::Mat(), cv::Mat(1, 1, CV_8UC1)},
                  .circular = circular}));
 
             REQUIRE(cam.open(0, 0, {}));

@@ -1,19 +1,28 @@
 find_package(OpenCV REQUIRED)
 find_package(Poco REQUIRED Foundation Net)
 
-add_library(FairyCam STATIC
-    HttpCamera.cpp
-    DirectoryTriggerCamera.cpp
-    FileCamera.cpp
-)
-
 set (HEADERS
     "AnyCamera.hpp"
+    "MemoryCamera.hpp"
     "FileCamera.hpp"
     "HttpCamera.hpp"
     "DirectoryCamera.hpp"
     "DirectoryTriggerCamera.hpp"
     "IsAnyCamera.hpp"
+
+    "chaos/ChaosCamera.hpp"
+    "chaos/Exceptions.hpp"
+    "chaos/Sequence.hpp"
+    "chaos/RandomSequence.hpp"
+)
+
+add_library(FairyCam STATIC
+    HttpCamera.cpp
+    DirectoryTriggerCamera.cpp
+    FileCamera.cpp
+    MemoryCamera.cpp
+
+    ${HEADERS}
 )
 
 target_sources(FairyCam PUBLIC FILE_SET HEADERS

@@ -19,6 +19,8 @@ The intention of this library is to make automatic testing possible without rely
 
 - `AnyCamera`: can hold any `cv::VideoCapture` interface compatible camera.
 
+- `MemoryCamera`: grabs images from a defined vector of images wich are already loaded in memory. Returns an empty image and error when the sequence was reached the end, or, when the `circular` option is enabled, starts from the start of the sequence again.
+
 - `FileCamera`: grabs images from a provided sequence of paths. Returns an empty image and error when the sequence was reached the end, or, when the `circular` option is enabled, starts from the start of the sequence again.
 
 - `DirectoryCamera` : grabs images from a provided directory. Returns an empty image anderror when the all images in the directory were shown once. When the `circular` option is enabled, the images in the directory are shown endlessly.
@@ -26,6 +28,26 @@ The intention of this library is to make automatic testing possible without rely
 - `DirectoryTriggerCamera` : grabs images from a provided directory which were newly added to the directory. Every add/move of an image file into the directory is like the camera was triggered. It queues those images.
 
 - `HttpCamera` : opens a HTTP server where you can connect and can images (.png/.jpg) via "POST /images" \<body containing the encoded image data\>. Queues those images. "DELETE /images" empties the queue.
+
+### Camera Error Testing
+
+It is possible to control the error with a given camera. For this purpose, `ChaosCamera` exists. It takes a camera and a error controlling sequence, for example `RanomSequence` which has a change of throwing an exception based on randomness.
+
+Here is an example:
+```cpp
+AnyCamera camera = ...;
+ChaosCamera chaos_cam(std::move(camera), RandomSequence({.isOpen = {0.95}})); // isOpen will fail 95% of the time. It will throw the exception "NotOpenException".
+```
+
+You can also add custom exceptions and weight them
+```cpp
+AnyCamera camera = ...;
+ChaosCamera chaos_cam(std::move(camera), RandomSequence({.isOpen = RandomSequence::Fail(0.5).with<MyException>(5).with<MySecondException>(0.5) })); // "isOpen will fail 50% of the time, The ratio of MyException:MySecondException will be 10:1"
+```
+
+`ChaosCamera` supports `setExceptionMode` to enable/disable exceptions. It is on by default, so disable it if you don't want any. In this case, the corresponding functions will return `false`.
+
+All standard exception which will be thrown when no custom exceptions where defined, are derived from `std::exception`.
 
 ## Build Requirements
 
@@ -35,7 +57,7 @@ The intention of this library is to make automatic testing possible without rely
 
 ## How-To Use
 
-FairyCam provides a new class `AnyCamera` which is an interface of `cv::VideoCapture` without relying on inheritance. It
+FairyCam provides a new class `FairyCam::AnyCamera` which is an interface of `cv::VideoCapture` without relying on inheritance. It
  can take any Camera which fulfills the `cv::VideoCapture`/`FairyCam::IsAnyCamera`-Concept.
 
 An example using dynamic polymorphism where you can change the camera at runtime:
@@ -64,10 +86,9 @@ int main()
     using namespace FairyCam;
     if (config::isTestingEnabled())
     {
-        auto opts = FileCamera::Options{.files={"myFile1.png""differentFile.jpg"}};
-        return startSystem(AnyCamera::create<FileCamera>(std::move(opts)));
+        return startSystem(FileCamera({.files={"myFile1.png", "differentFile.jpg"}));
     }
-    return startSystem(AnyCamera::create<cv::VideoCapture>());
+    return startSystem(cv::VideoCapture());
 }
 
 
@@ -103,7 +124,7 @@ int main()
     
     if (config::isTestingEnabled())
     {
-        return startSystem(FairyCamera::HttpCamera());
+        return startSystem(FileCamera({.files={"myFile1.png", "differentFile.jpg"}));
     }
     return startSystem(cv::VideoCapture());
 }
