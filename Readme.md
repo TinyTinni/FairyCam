@@ -27,6 +27,26 @@ The intention of this library is to make automatic testing possible without rely
 
 - `HttpCamera` : opens a HTTP server where you can connect and can images (.png/.jpg) via "POST /images" \<body containing the encoded image data\>. Queues those images. "DELETE /images" empties the queue.
 
+### Camera Error Testing
+
+It is possible to control the error with a given camera. For this purpose, `ChaosCamera` exists. It takes a camera and a error controlling sequence, for example `RanomSequence` which has a change of throwing an exception based on randomness.
+
+Here is an example:
+```cpp
+AnyCamera camera = ...;
+ChaosCamera chaos_cam(std::move(camera), RandomSequence({.isOpen = {0.95}})); // isOpen will fail 95% of the time. It will throw the exception "NotOpenException".
+```
+
+You can also add custom exceptions and weight them
+```cpp
+AnyCamera camera = ...;
+ChaosCamera chaos_cam(std::move(camera), RandomSequence({.isOpen = RandomSequence::Fail(0.5).with<MyException>(5).with<MySecondException>(0.5) })); // "isOpen will fail 50% of the time, The ratio of MyException:MySecondException will be 10:1"
+```
+
+`ChaosCamera` supports `setExceptionMode` to enable/disable exceptions. It is on by default, so disable it if you don't want any. In this case, the corresponding functions will return `false`.
+
+All standard exception which will be thrown when no custom exceptions where defined, are derived from `std::exception`.
+
 ## Build Requirements
 
 - C++20
@@ -35,7 +55,7 @@ The intention of this library is to make automatic testing possible without rely
 
 ## How-To Use
 
-FairyCam provides a new class `AnyCamera` which is an interface of `cv::VideoCapture` without relying on inheritance. It
+FairyCam provides a new class `FairyCam::AnyCamera` which is an interface of `cv::VideoCapture` without relying on inheritance. It
  can take any Camera which fulfills the `cv::VideoCapture`/`FairyCam::IsAnyCamera`-Concept.
 
 An example using dynamic polymorphism where you can change the camera at runtime:
