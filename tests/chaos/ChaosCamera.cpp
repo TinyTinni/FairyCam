@@ -1,8 +1,11 @@
+#include <array>
+#include <concepts>
+#include <vector>
+
 #include <AnyCamera.hpp>
 #include <MemoryCamera.hpp>
 #include <chaos/ChaosCamera.hpp>
 #include <chaos/RandomSequence.hpp>
-#include <concepts>
 #include <doctest.h>
 
 using namespace FairyCam;

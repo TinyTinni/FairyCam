@@ -1,6 +1,9 @@
-#include <chaos/RandomSequence.hpp>
+#include <array>
 #include <concepts>
 #include <doctest.h>
+#include <vector>
+
+#include <chaos/RandomSequence.hpp>
 
 using namespace FairyCam;
 
