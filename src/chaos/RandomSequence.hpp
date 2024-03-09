@@ -20,14 +20,18 @@ class RandomSequence : public Sequence
   public:
     class Fail
     {
-        float probability;
+        double probability;
         std::vector<std::function<void()>> exceptions;
         std::vector<double> weights;
         friend Probas;
 
       public:
         Fail() : probability{0.f} {}
-        Fail(float probability) : probability{probability} {}
+        Fail(int proba) : probability{static_cast<double>(proba)} {}
+        Fail(double proba) : probability{proba}
+        {
+            assert(proba >= 0 && proba <= 0);
+        }
 
         template <std::default_initializable ExceptionT>
         Fail &with(double weight = 1.0)
