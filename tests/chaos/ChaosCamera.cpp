@@ -26,16 +26,12 @@ TEST_SUITE("ChaosCamera")
             CAPTURE(failGrab);
             CAPTURE(failRetrieve);
 
-            float probaFailIsOpen = failIsOpen;
-            float probaFailGrab = failGrab;
-            float probaFailRetrieve = failRetrieve;
-
             AnyCamera cam =
                 ChaosCamera(MemoryCamera({.images = {cv::Mat(1, 1, CV_8UC1)},
                                           .circular = true}),
-                            RandomSequence({.isOpen = {probaFailIsOpen},
-                                            .grab = {probaFailGrab},
-                                            .retrieve = {probaFailRetrieve}}));
+                            RandomSequence({.isOpen = failIsOpen,
+                                            .grab = failGrab,
+                                            .retrieve = failRetrieve}));
             for (size_t i = 0; i < 10; ++i)
             {
                 if (failIsOpen)
@@ -75,16 +71,12 @@ TEST_SUITE("ChaosCamera")
             CAPTURE(failGrab);
             CAPTURE(failRetrieve);
 
-            float probaFailIsOpen = failIsOpen;
-            float probaFailGrab = failGrab;
-            float probaFailRetrieve = failRetrieve;
-
             AnyCamera cam =
                 ChaosCamera(MemoryCamera({.images = {cv::Mat(1, 1, CV_8UC1)},
                                           .circular = true}),
-                            RandomSequence({.isOpen = {probaFailIsOpen},
-                                            .grab = {probaFailGrab},
-                                            .retrieve = {probaFailRetrieve}}));
+                            RandomSequence({.isOpen = failIsOpen,
+                                            .grab = failGrab,
+                                            .retrieve = failRetrieve}));
 
             cam.setExceptionMode(false);
             for (size_t i = 0; i < 10; ++i)

@@ -23,9 +23,9 @@ TEST_SUITE("RandomSequence")
             CAPTURE(failGrab);
             CAPTURE(failRetrieve);
 
-            RandomSequence s({.isOpen = RandomSequence::Fail(failIsOpen),
-                              .grab = RandomSequence::Fail(failGrab),
-                              .retrieve = RandomSequence::Fail(failRetrieve)});
+            RandomSequence s({.isOpen = failIsOpen,
+                              .grab = failGrab,
+                              .retrieve = failRetrieve});
             for (size_t i = 0; i < 100; ++i)
             {
                 if (failIsOpen)
