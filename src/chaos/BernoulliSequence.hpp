@@ -56,8 +56,7 @@ class BernoulliSequence : public Sequence
     };
 
     BernoulliSequence(Options opts)
-        : m_gen{std::random_device{}()}, m_is_open{std::move(opts.isOpen)},
-          m_retrieve{std::move(opts.retrieve)}, m_grab{std::move(opts.grab)}
+        : BernoulliSequence(std::random_device{}(), std::move(opts))
     {
     }
 

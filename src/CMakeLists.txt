@@ -14,6 +14,7 @@ set (HEADERS
     "chaos/Exceptions.hpp"
     "chaos/Sequence.hpp"
     "chaos/BernoulliSequence.hpp"
+    "chaos/BinaryBlobSequence.hpp"
 )
 
 add_library(FairyCam STATIC

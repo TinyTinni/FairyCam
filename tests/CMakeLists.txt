@@ -12,6 +12,7 @@ add_executable(Tests main.cpp
     chaos/BernoulliSequence.cpp
     chaos/ChaosCamera.cpp
     MemoryCamera.cpp
+    chaos/BinaryBlobSequence.cpp
 )
 
 target_include_directories(Tests PUBLIC ${OpenCV_INCLUDE_DIRS} )
