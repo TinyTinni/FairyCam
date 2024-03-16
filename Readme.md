@@ -79,7 +79,7 @@ int main()
 
 ```cpp
 #include <FairyCam/IsAnyCamera.hpp>
-#include <FairyCam/HttpCamera.hpp>
+#include <FairyCam/FileCamera.hpp>
 
 // Template with concept instead of runtime polymorphism.
 // It eliminates the virtual calls and indirection of AnyCamera
@@ -122,8 +122,8 @@ Here is an example:
 ```cpp
 AnyCamera camera = ...;
 ChaosCamera chaos_cam(std::move(camera), 
-    RandomSequence({.isOpen = 0.95})); 
-    // isOpen will fail 95% of the time. 
+    BernoulliSequence({.isOpen = 0.05})); 
+    // isOpen will fail 5% of the time. 
     // It will throw the exception "NotOpenException".
 ```
 
@@ -131,7 +131,7 @@ You can also add custom exceptions and weight them
 ```cpp
 AnyCamera camera = ...;
 ChaosCamera chaos_cam(std::move(camera), 
-    RandomSequence({.isOpen = RandomSequence::Fail(0.5).
+    RandomSequence({.isOpen = BernoulliSequence::Fail(0.5).
         with<MyException>(5).
         with<MySecondException>(0.5) })); 
         // "isOpen will fail 50% of the time.

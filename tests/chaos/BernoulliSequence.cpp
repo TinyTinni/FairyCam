@@ -3,7 +3,7 @@
 #include <doctest.h>
 #include <vector>
 
-#include <chaos/RandomSequence.hpp>
+#include <chaos/BernoulliSequence.hpp>
 
 using namespace FairyCam;
 
@@ -23,9 +23,9 @@ TEST_SUITE("RandomSequence")
             CAPTURE(failGrab);
             CAPTURE(failRetrieve);
 
-            RandomSequence s({.isOpen = failIsOpen,
-                              .grab = failGrab,
-                              .retrieve = failRetrieve});
+            BernoulliSequence s({.isOpen = failIsOpen,
+                                 .grab = failGrab,
+                                 .retrieve = failRetrieve});
             for (size_t i = 0; i < 100; ++i)
             {
                 if (failIsOpen)
@@ -70,15 +70,16 @@ TEST_SUITE("RandomSequence")
             CAPTURE(failGrab);
             CAPTURE(failRetrieve);
 
-            RandomSequence s({.isOpen = RandomSequence::Fail(failIsOpen)
-                                            .with<CustomException1>()
-                                            .with<CustomException2>(),
-                              .grab = RandomSequence::Fail(failGrab)
-                                          .with<CustomException1>(0.0)
-                                          .with<CustomException2>(1.0),
-                              .retrieve = RandomSequence::Fail(failRetrieve)
-                                              .with<CustomException1>(1.0)
-                                              .with<CustomException2>(0.0)});
+            BernoulliSequence s(
+                {.isOpen = BernoulliSequence::Fail(failIsOpen)
+                               .with<CustomException1>()
+                               .with<CustomException2>(),
+                 .grab = BernoulliSequence::Fail(failGrab)
+                             .with<CustomException1>(0.0)
+                             .with<CustomException2>(1.0),
+                 .retrieve = BernoulliSequence::Fail(failRetrieve)
+                                 .with<CustomException1>(1.0)
+                                 .with<CustomException2>(0.0)});
 
             uint32_t threwCustom1 = 0;
             uint32_t threwCustom2 = 0;

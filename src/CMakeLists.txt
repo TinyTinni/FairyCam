@@ -13,7 +13,7 @@ set (HEADERS
     "chaos/ChaosCamera.hpp"
     "chaos/Exceptions.hpp"
     "chaos/Sequence.hpp"
-    "chaos/RandomSequence.hpp"
+    "chaos/BernoulliSequence.hpp"
 )
 
 add_library(FairyCam STATIC

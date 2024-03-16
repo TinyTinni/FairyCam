@@ -5,7 +5,7 @@
 #include <AnyCamera.hpp>
 #include <MemoryCamera.hpp>
 #include <chaos/ChaosCamera.hpp>
-#include <chaos/RandomSequence.hpp>
+#include <chaos/BernoulliSequence.hpp>
 #include <doctest.h>
 
 using namespace FairyCam;
@@ -29,9 +29,9 @@ TEST_SUITE("ChaosCamera")
             AnyCamera cam =
                 ChaosCamera(MemoryCamera({.images = {cv::Mat(1, 1, CV_8UC1)},
                                           .circular = true}),
-                            RandomSequence({.isOpen = failIsOpen,
-                                            .grab = failGrab,
-                                            .retrieve = failRetrieve}));
+                            BernoulliSequence({.isOpen = failIsOpen,
+                                               .grab = failGrab,
+                                               .retrieve = failRetrieve}));
             for (size_t i = 0; i < 10; ++i)
             {
                 if (failIsOpen)
@@ -74,9 +74,9 @@ TEST_SUITE("ChaosCamera")
             AnyCamera cam =
                 ChaosCamera(MemoryCamera({.images = {cv::Mat(1, 1, CV_8UC1)},
                                           .circular = true}),
-                            RandomSequence({.isOpen = failIsOpen,
-                                            .grab = failGrab,
-                                            .retrieve = failRetrieve}));
+                            BernoulliSequence({.isOpen = failIsOpen,
+                                               .grab = failGrab,
+                                               .retrieve = failRetrieve}));
 
             cam.setExceptionMode(false);
             for (size_t i = 0; i < 10; ++i)

@@ -13,7 +13,7 @@
 namespace FairyCam
 {
 
-class RandomSequence : public Sequence
+class BernoulliSequence : public Sequence
 {
     struct Probas;
 
@@ -55,13 +55,13 @@ class RandomSequence : public Sequence
         Fail retrieve = Fail{};
     };
 
-    RandomSequence(Options opts)
+    BernoulliSequence(Options opts)
         : m_gen{std::random_device{}()}, m_is_open{std::move(opts.isOpen)},
           m_retrieve{std::move(opts.retrieve)}, m_grab{std::move(opts.grab)}
     {
     }
 
-    RandomSequence(int seed, Options opts)
+    BernoulliSequence(int seed, Options opts)
         : m_is_open{std::move(opts.isOpen)},
           m_retrieve{std::move(opts.retrieve)}, m_grab{std::move(opts.grab)}
     {
