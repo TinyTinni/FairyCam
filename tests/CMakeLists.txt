@@ -9,7 +9,7 @@ add_executable(Tests main.cpp
     HttpCamera.cpp
     AnyCamera.cpp
     DirectoryTriggerCamera.cpp
-    chaos/RandomSequence.cpp
+    chaos/BernoulliSequence.cpp
     chaos/ChaosCamera.cpp
     MemoryCamera.cpp
 )
