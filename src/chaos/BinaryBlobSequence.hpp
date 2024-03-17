@@ -15,8 +15,8 @@ namespace FairyCam
 
 class BinaryBlobSequence : public Sequence
 {
-    std::span<uint8_t> m_data;
-    std::span<uint8_t>::iterator m_iter;
+    std::span<const uint8_t> m_data;
+    std::span<const uint8_t>::iterator m_iter;
 
     struct FailException
     {
@@ -59,7 +59,7 @@ class BinaryBlobSequence : public Sequence
         Fail retrieve = Fail().with<RetrieveException>();
     };
 
-    BinaryBlobSequence(std::span<uint8_t> data, Options opts)
+    BinaryBlobSequence(std::span<const uint8_t> data, Options opts)
         : m_data(data), m_iter(m_data.begin()),
           m_open{std::move(opts.isOpen.exceptions)},
           m_grab{std::move(opts.grab.exceptions)},
@@ -67,7 +67,7 @@ class BinaryBlobSequence : public Sequence
     {
     }
 
-    BinaryBlobSequence(std::span<uint8_t> data)
+    BinaryBlobSequence(std::span<const uint8_t> data)
         : BinaryBlobSequence(data, Options())
     {
     }
