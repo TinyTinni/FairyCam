@@ -15,6 +15,7 @@ set (HEADERS
     "chaos/Sequence.hpp"
     "chaos/BernoulliSequence.hpp"
     "chaos/BinaryBlobSequence.hpp"
+    "chaos/NoErrorSequence.hpp"
 )
 
 add_library(FairyCam STATIC
@@ -22,7 +23,6 @@ add_library(FairyCam STATIC
     DirectoryTriggerCamera.cpp
     FileCamera.cpp
     MemoryCamera.cpp
-
     ${HEADERS}
 )
 

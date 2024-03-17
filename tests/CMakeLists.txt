@@ -2,7 +2,7 @@
 find_package(OpenCV REQUIRED)
 find_package(Poco REQUIRED Foundation Net)
 
-add_executable(Tests main.cpp
+add_executable(Tests
     main.cpp
     FileCamera.cpp
     DirectoryCamera.cpp

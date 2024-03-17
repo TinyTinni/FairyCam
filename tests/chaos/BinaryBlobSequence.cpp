@@ -4,7 +4,6 @@
 #include <span>
 #include <vector>
 
-#include <chaos/BernoulliSequence.hpp>
 #include <chaos/BinaryBlobSequence.hpp>
 
 using namespace FairyCam;
