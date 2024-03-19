@@ -107,12 +107,13 @@ TEST_SUITE("HttpCamera")
                 REQUIRE(sendFileImage(client, TEST_DATA "test.png"));
             }
 
-            cv::Mat m;
             for (int i = 0; i < n_images; ++i)
             {
+                cv::Mat m;
                 REQUIRE(cam.read(m));
                 CHECK(!m.empty());
             }
+            cv::Mat m;
             REQUIRE(!cam.read(m));
             CHECK(m.empty());
         }
@@ -155,7 +156,6 @@ TEST_SUITE("HttpCamera")
             REQUIRE(cam.open(0, 0, {}));
             REQUIRE(cam.isOpened());
 
-            cv::Mat m;
             for (auto i = 0; i < n_images; ++i)
             {
                 REQUIRE(sendFileImage(client, TEST_DATA "test.png"));
@@ -170,6 +170,7 @@ TEST_SUITE("HttpCamera")
             CHECK(response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
 
             // no images are left in the queue
+            cv::Mat m;
             REQUIRE(!cam.read(m));
             CHECK(m.empty());
         }

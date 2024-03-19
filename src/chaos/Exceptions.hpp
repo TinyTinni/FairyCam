@@ -5,6 +5,10 @@
 namespace FairyCam
 {
 
+class SequenceEndException
+{
+};
+
 class NotOpenException : public std::runtime_error
 {
   public:
