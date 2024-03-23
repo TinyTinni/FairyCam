@@ -136,6 +136,8 @@ ChaosCamera chaos_cam(std::move(camera),
         with<MySecondException>(0.5) })); 
         // "isOpen will fail 50% of the time.
         // The ratio of MyException:MySecondException will be 10:1"
+        // Weights are optional.
+        // Default is a uniform distribution
 ```
 
 `ChaosCamera` supports `setExceptionMode` to enable/disable exceptions. It is on by default, so disable it if you don't want any. In this case, the corresponding functions will return `false`.

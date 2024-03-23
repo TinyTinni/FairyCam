@@ -39,7 +39,7 @@ class AnyCamera
 
         virtual ~Model(){};
         template <typename... Args>
-        Model(Args... args) : m_camera{std::forward<Args...>(args...)}
+        Model(Args &&...args) : m_camera{std::forward<Args...>(args...)}
         {
         }
         Model() : m_camera{} {}
@@ -115,7 +115,7 @@ class AnyCamera
     }
 
     template <IsAnyCamera CameraType, typename... Args>
-    static AnyCamera create(Args... args)
+    static AnyCamera create(Args &&...args)
     {
         return AnyCamera(std::make_unique<Model<CameraType>>(
             std::forward<Args...>(args...)));
