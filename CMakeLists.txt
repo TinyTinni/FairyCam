@@ -19,8 +19,8 @@ if (NOT ${Poco_FOUND})
   include(cmake/CPM.cmake)
   CPMAddPackage(
     NAME Poco
-    VERSION 1.13.2
-    URL https://github.com/pocoproject/poco/archive/refs/tags/poco-1.13.2-release.tar.gz
+    VERSION 1.13.3
+    URL https://github.com/pocoproject/poco/archive/refs/tags/poco-1.13.3-release.tar.gz
     OPTIONS
     "BUILD_SHARED_LIBS OFF"
     "ENABLE_FOUNDATION ON"
