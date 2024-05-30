@@ -11,11 +11,9 @@ add_executable(Example_Fuzzer
 )
 
 target_include_directories(Example_Fuzzer PUBLIC ${OpenCV_INCLUDE_DIRS} )
-target_link_libraries(Example_Fuzzer PRIVATE FairyCam)
+target_compile_features(Example_Fuzzer PRIVATE cxx_std_20)
 
-target_compile_features(Example_Fuzzer PUBLIC cxx_std_20)
-
-target_link_libraries(Example_Fuzzer PRIVATE -coverage -fsanitize=fuzzer)
+target_link_libraries(Example_Fuzzer PRIVATE FairyCam -coverage -fsanitize=fuzzer)
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     target_compile_options(Example_Fuzzer PRIVATE -fsanitize=fuzzer)
     target_link_libraries(Example_Fuzzer PUBLIC -fsanitize=address,undefined)
