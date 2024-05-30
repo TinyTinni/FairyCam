@@ -21,7 +21,7 @@ jobs:
         compiler:
           # you can specify the version after `-` like "llvm-15.0.2".
           - llvm-17
-          #- gcc-14.1 not downloadable yet
+          #- gcc-14.1 not downloadable yet. 14 is required for module support
         generator:
           - "Ninja Multi-Config"
         build_type:

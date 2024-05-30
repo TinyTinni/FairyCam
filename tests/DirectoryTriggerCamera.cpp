@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <format>
+#include <vector>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>

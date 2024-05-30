@@ -1,6 +1,8 @@
 #include <doctest.h>
 #include <opencv2/core.hpp>
 
+#include <vector>
+
 import FairyCam;
 
 using namespace FairyCam;
