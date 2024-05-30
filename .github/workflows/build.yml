@@ -43,8 +43,8 @@ jobs:
         run: |
           choco install opencv --package-parameters '/InstallationPath:C:\opencv /Environment'
           echo "C:\opencv\opencv\build\x64\vc16\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          dir C:\opencv\opencv\build
-          dir C:\opencv\opencv\build\bin
+          choco install visualstudio2022buildtools -y
+          choco upgrade visualstudio2022buildtools -y
         if: matrix.os == 'windows-latest'
 
       - name: Setup Cpp
