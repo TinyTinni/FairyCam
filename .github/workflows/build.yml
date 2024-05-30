@@ -50,7 +50,7 @@ jobs:
         with:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
-          ninja: 1.11
+          ninja: 1.12.1
 
       - name: Configure CMake (windows)
         run: |
