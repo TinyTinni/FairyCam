@@ -1,6 +1,7 @@
-#include <AnyCamera.hpp>
-#include <FileCamera.hpp>
 #include <doctest.h>
+#include <opencv2/core.hpp>
+
+import FairyCam;
 
 using namespace FairyCam;
 

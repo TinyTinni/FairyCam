@@ -27,8 +27,15 @@ add_library(FairyCam STATIC
 )
 
 target_sources(FairyCam PUBLIC FILE_SET HEADERS
+    BASE_DIRS ${CURRENT_SOURCE_DIR}
     FILES
     ${HEADERS}
+)
+
+target_sources(FairyCam PUBLIC FILE_SET CXX_MODULES
+    BASE_DIRS ${CURRENT_SOURCE_DIR}
+    FILES
+    "FairyCam.cpp"
 )
 
 target_include_directories(FairyCam PUBLIC ${OpenCV_INCLUDE_DIRS} )

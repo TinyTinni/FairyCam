@@ -1,11 +1,11 @@
 #include <doctest.h>
 
-#include <AnyCamera.hpp>
-#include <DirectoryCamera.hpp>
-#include <DirectoryTriggerCamera.hpp>
-#include <FileCamera.hpp>
-#include <HttpCamera.hpp>
+#include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
+
+#include <filesystem>
+
+import FairyCam;
 
 using namespace FairyCam;
 

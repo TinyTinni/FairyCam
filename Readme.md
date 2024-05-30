@@ -80,6 +80,8 @@ int main()
 ```cpp
 #include <FairyCam/IsAnyCamera.hpp>
 #include <FairyCam/FileCamera.hpp>
+//or if you use modules
+import FairyCam;
 
 // Template with concept instead of runtime polymorphism.
 // It eliminates the virtual calls and indirection of AnyCamera
