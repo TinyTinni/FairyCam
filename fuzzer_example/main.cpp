@@ -1,10 +1,10 @@
 #include <cstdint>
 #include <span>
+#include <stdexcept>
 
-#include <AnyCamera.hpp>
-#include <MemoryCamera.hpp>
-#include <chaos/BinaryBlobSequence.hpp>
-#include <chaos/ChaosCamera.hpp>
+#include <opencv2/core.hpp>
+
+import FairyCam;
 
 void my_system(FairyCam::IsAnyCamera auto cam)
 {

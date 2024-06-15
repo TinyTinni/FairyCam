@@ -21,7 +21,7 @@ jobs:
         compiler:
           # you can specify the version after `-` like "llvm-15.0.2".
           - llvm-17
-          - gcc-13
+          #- gcc-14.1 not downloadable yet. 14 is required for module support
         generator:
           - "Ninja Multi-Config"
         build_type:
@@ -50,6 +50,8 @@ jobs:
         with:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
+          ninja: 1.12.1
+          cmake: 3.29.2
 
       - name: Configure CMake (windows)
         run: |

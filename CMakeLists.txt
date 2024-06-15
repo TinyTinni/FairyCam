@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.28)
 
 set(PROJECT_VERSION 1.0.0)
 project(FairyCam LANGUAGES CXX VERSION ${PROJECT_VERSION})
