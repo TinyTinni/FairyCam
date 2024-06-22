@@ -68,3 +68,7 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{matrix.build_type}} -D ExperimentalMemCheck --output-on-failure 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: valgrind_results
+          path: ./build/Testing/Temporary #
