@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install dependencies (linux)
-        run: sudo apt install ninja-build libopencv-dev libpoco-dev
+        run: sudo apt update && sudo apt install ninja-build libopencv-dev libpoco-dev valgrind
         if: matrix.os == 'ubuntu-latest'
       - name: Install dependencies (windows)
         run: |
@@ -67,4 +67,4 @@ jobs:
           cmake --build ./build --config ${{matrix.build_type}}
       - name: Test
         working-directory: ${{github.workspace}}/build
-        run: ctest -C ${{matrix.build_type}} --output-on-failure
+        run: ctest -C ${{matrix.build_type}} -D ExperimentalMemCheck --output-on-failure 

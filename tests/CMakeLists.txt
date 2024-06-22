@@ -2,6 +2,10 @@
 find_package(OpenCV REQUIRED)
 find_package(Poco REQUIRED Foundation Net)
 
+
+find_program( MEMORYCHECK_COMMAND valgrind )
+set( MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --leak-check=full --xml=yes --xml-file=valgrind-out.xml --log-file=valgrind-out.log" )
+
 add_executable(Tests
     main.cpp
     FileCamera.cpp
@@ -24,5 +28,6 @@ target_compile_features(Tests PUBLIC cxx_std_20)
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
    target_link_libraries(Tests PUBLIC -fsanitize=address,undefined)
 endif()
+
 
 add_test(NAME Tests COMMAND Tests)
