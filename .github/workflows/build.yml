@@ -9,6 +9,14 @@ on:
       - main
       - master
 
+env:
+  CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
+  CCACHE_BASEDIR: ${{ github.workspace }}
+  CCACHE_DIR: ${{ github.workspace }}/.ccache
+  CCACHE_COMPRESS: true
+  CCACHE_COMPRESSLEVEL: 6
+  CCACHE_MAXSIZE: 400M
+
 jobs:
   Test:
     runs-on: ${{ matrix.os }}
@@ -37,7 +45,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ./build
+            ${{ github.workspace }}/.ccache
+            ${{ github.workspace }}/cpm_modules
+            ${{ matrix.os == 'windows-latest' && 'C:/Users/runneradmin/AppData/Local/Temp/OpenCV' || '' }}
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.compiler }}
@@ -59,20 +69,13 @@ jobs:
           ninja: true
           ccache: true
 
-      - name: Configure CMake (windows)
-        run: cmake -S . -B ./build -G "Ninja Multi-Config" 
+      - name: Configure CMake
+        run:
+          cmake -S . -B ./build -G "Ninja Multi-Config" 
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
-          -DOpenCV_DIR="C:/opencv/opencv/build/" 
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-        if: matrix.os == 'windows-latest'
-
-      - name: Configure CMake (linux)
-        run: cmake -S . -B ./build -G "Ninja Multi-Config" 
-          -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
-          -DCMAKE_C_COMPILER_LAUNCHER=ccache
-          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-        if: matrix.os == 'ubuntu-latest'
+          ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
@@ -81,3 +84,6 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{matrix.build_type}} --output-on-failure
+      - name: ccache stats
+        run: |
+          ccache -s
