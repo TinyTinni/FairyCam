@@ -85,6 +85,6 @@ jobs:
       - name: ccache stats
         run: |
           echo "${{ github.workspace }}/.ccache"
-          ls -ll ${{ github.workspace }}
+          ls -lla ${{ github.workspace }}
           ccache -p
           ccache -s
