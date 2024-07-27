@@ -11,6 +11,11 @@ on:
 
 env:
   CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
+  CCACHE_BASEDIR: ${GITHUB_WORKSPACE}
+  CCACHE_DIR: ${GITHUB_WORKSPACE}/.ccache
+  CCACHE_COMPRESS: true
+  CCACHE_COMPRESSLEVEL: 6
+  CCACHE_MAXSIZE: 400M
 
 jobs:
   Test:
@@ -41,7 +46,7 @@ jobs:
         with:
           path: |
             "cpm_modules/**"
-            "build/_deps/**"
+            ".cache/
              ${{ matrix.os == 'windows-latest' && 'C:/Users/runneradmin/AppData/Local/Temp/OpenCV' || '' }}
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
@@ -62,10 +67,13 @@ jobs:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
           ninja: true
+          ccache: true
 
       - name: Configure CMake
         run: cmake -S . -B ./build -G "Ninja Multi-Config" 
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
           ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
 
       - name: Build
