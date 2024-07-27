@@ -46,6 +46,8 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/.ccache
+            ${{ github.workspace }}/cpm_modules
+            ${{ matrix.os == 'windows-latest' && 'C:/Users/runneradmin/AppData/Local/Temp/OpenCV' || '' }}
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.compiler }}
