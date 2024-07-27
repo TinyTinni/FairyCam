@@ -83,5 +83,7 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{matrix.build_type}} --output-on-failure
-      - name: ccache stats
-        run: ccache -s
+      - name: Ccache stats
+        run: |
+          ccache -p
+          ccache -s
