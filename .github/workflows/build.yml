@@ -84,7 +84,4 @@ jobs:
         run: ctest -C ${{matrix.build_type}} --output-on-failure
       - name: ccache stats
         run: |
-          echo "${{ github.workspace }}/.ccache"
-          ls -lla ${{ github.workspace }}
-          ccache -p
           ccache -s
