@@ -8,6 +8,7 @@ on:
     branches:
       - main
       - master
+      - test-ccache-and-ninja
 
 jobs:
   Test:
@@ -22,22 +23,28 @@ jobs:
           # you can specify the version after `-` like "llvm-15.0.2".
           - llvm-17
           - gcc-13
-        generator:
-          - "Ninja Multi-Config"
         build_type:
           - Release
         include:
           # Windows msvc builds
           - os: windows-latest
             compiler: msvc
-            generator: "Visual Studio 17 2022"
             build_type: Release
 
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./build
+          key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.compiler }}
+
       - name: Install dependencies (linux)
-        run: sudo apt install ninja-build libopencv-dev libpoco-dev
+        run: sudo apt update && sudo apt install ninja-build libopencv-dev libpoco-dev
         if: matrix.os == 'ubuntu-latest'
       - name: Install dependencies (windows)
         run: |
@@ -50,15 +57,22 @@ jobs:
         with:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
+          ninja: true
+          ccache: true
 
       - name: Configure CMake (windows)
-        run: |
-          cmake -S . -B ./build -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} -DOpenCV_DIR="C:/opencv/opencv/build/" 
+        run: cmake -S . -B ./build -G "Ninja Multi-Config" 
+          -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
+          -DOpenCV_DIR="C:/opencv/opencv/build/" 
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
         if: matrix.os == 'windows-latest'
 
       - name: Configure CMake (linux)
-        run: |
-          cmake -S . -B ./build -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
+        run: cmake -S . -B ./build -G "Ninja Multi-Config" 
+          -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
         if: matrix.os == 'ubuntu-latest'
 
       - name: Build
