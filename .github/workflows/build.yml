@@ -45,7 +45,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            "${{ github.workspace }}/.ccache"
+            ${{ github.workspace }}/.ccache
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.compiler }}
