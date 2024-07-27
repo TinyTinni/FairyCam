@@ -9,6 +9,9 @@ on:
       - main
       - master
 
+env:
+  CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
+
 jobs:
   Test:
     runs-on: ${{ matrix.os }}
@@ -36,8 +39,7 @@ jobs:
       - name: Cache
         uses: actions/cache@v3
         with:
-          path: |
-            ./build
+          path: "**/cpm_modules"
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.compiler }}
@@ -57,7 +59,6 @@ jobs:
           compiler: ${{ matrix.compiler }}
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
           ninja: true
-          ccache: true
 
       - name: Configure CMake (windows)
         run: cmake -S . -B ./build -G "Ninja Multi-Config" 
@@ -70,8 +71,6 @@ jobs:
       - name: Configure CMake (linux)
         run: cmake -S . -B ./build -G "Ninja Multi-Config" 
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
-          -DCMAKE_C_COMPILER_LAUNCHER=ccache
-          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
         if: matrix.os == 'ubuntu-latest'
 
       - name: Build
