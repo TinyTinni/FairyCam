@@ -45,9 +45,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            "${{ github.workspace }}/cpm_modules"
             "${{ github.workspace }}/.ccache"
-             ${{ matrix.os == 'windows-latest' && 'C:/Users/runneradmin/AppData/Local/Temp/OpenCV' || '' }}
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.compiler }}
@@ -80,7 +78,6 @@ jobs:
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: |
-          mkdir cpm_modules
           cmake --build ./build --config ${{matrix.build_type}}
       - name: Test
         working-directory: ${{github.workspace}}/build
