@@ -45,8 +45,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            "cpm_modules/**"
-            ".cache/
+            "${{ github.workspace }}/cpm_modules"
+            "${{ github.workspace }}/.ccache"
              ${{ matrix.os == 'windows-latest' && 'C:/Users/runneradmin/AppData/Local/Temp/OpenCV' || '' }}
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
@@ -83,7 +83,7 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{matrix.build_type}} --output-on-failure
-      - name: Ccache stats
+      - name: ccache stats
         run: |
           ccache -p
           ccache -s
