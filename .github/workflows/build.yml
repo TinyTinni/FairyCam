@@ -39,7 +39,9 @@ jobs:
       - name: Cache
         uses: actions/cache@v3
         with:
-          path: "**/cpm_modules"
+          path: |
+            "**/cpm_modules"
+            ${{ matrix.os == 'windows-latest' && 'C:/opencv/' || '' }}
           key: ${{ runner.os }}-${{ matrix.compiler }}-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.compiler }}
@@ -60,16 +62,10 @@ jobs:
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
           ninja: true
 
-      - name: Configure CMake (windows)
+      - name: Configure CMake
         run: cmake -S . -B ./build -G "Ninja Multi-Config" 
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
-          -DOpenCV_DIR="C:/opencv/opencv/build/"
-        if: matrix.os == 'windows-latest'
-
-      - name: Configure CMake (linux)
-        run: cmake -S . -B ./build -G "Ninja Multi-Config" 
-          -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
-        if: matrix.os == 'ubuntu-latest'
+          ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
