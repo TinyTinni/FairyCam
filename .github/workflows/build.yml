@@ -63,9 +63,7 @@ jobs:
       - name: Configure CMake (windows)
         run: cmake -S . -B ./build -G "Ninja Multi-Config" 
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
-          -DOpenCV_DIR="C:/opencv/opencv/build/" 
-          -DCMAKE_C_COMPILER_LAUNCHER=ccache
-          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          -DOpenCV_DIR="C:/opencv/opencv/build/"
         if: matrix.os == 'windows-latest'
 
       - name: Configure CMake (linux)
