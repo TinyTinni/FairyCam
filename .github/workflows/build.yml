@@ -70,8 +70,7 @@ jobs:
           ccache: true
 
       - name: Configure CMake
-        run: |
-          mkdir cpm_modules
+        run:
           cmake -S . -B ./build -G "Ninja Multi-Config" 
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
@@ -81,6 +80,7 @@ jobs:
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: |
+          mkdir cpm_modules
           cmake --build ./build --config ${{matrix.build_type}}
       - name: Test
         working-directory: ${{github.workspace}}/build
