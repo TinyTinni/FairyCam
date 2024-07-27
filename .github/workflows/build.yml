@@ -10,7 +10,7 @@ on:
       - master
 
 env:
-  CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
+  CPM_SOURCE_CACHE: ${GITHUB_WORKSPACE}/cpm_modules
   CCACHE_BASEDIR: ${GITHUB_WORKSPACE}
   CCACHE_DIR: ${GITHUB_WORKSPACE}/.ccache
   CCACHE_COMPRESS: true
@@ -70,7 +70,9 @@ jobs:
           ccache: true
 
       - name: Configure CMake
-        run: cmake -S . -B ./build -G "Ninja Multi-Config" 
+        run: |
+          mkdir cpm_modules
+          cmake -S . -B ./build -G "Ninja Multi-Config" 
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
