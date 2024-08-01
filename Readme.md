@@ -115,6 +115,7 @@ int main()
 
 
  For more examples and usage, see [in the tests directory](./tests).
+ Remark: Tests uses C++20 modules with CMake. Please have a look at this [comment](https://github.com/TinyTinni/FairyCam/pull/4#issuecomment-2169859784) for CMake Module Support.
 
 ### Camera Error Testing
 
