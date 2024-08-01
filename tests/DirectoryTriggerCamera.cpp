@@ -1,8 +1,6 @@
 #include <doctest.h>
 
 #include <filesystem>
-#include <format>
-#include <vector>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -71,7 +69,8 @@ TEST_SUITE("DirectoryTriggerCamera")
 
             for (auto i = 0; i < n_images; ++i)
             {
-                cv::imwrite((new_dir / std::format("output{}.png", i)).string(),
+                cv::imwrite((new_dir / ("output" + std::to_string(i) + ".png"))
+                                .string(),
                             cv::Mat(16, 16, CV_8UC3));
                 CHECK(cam.read(mat));
                 CHECK(!mat.empty());

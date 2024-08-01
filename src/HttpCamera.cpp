@@ -146,7 +146,7 @@ bool HttpCamera::grab()
     if (!d->m_started)
         return false;
 
-    d->m_msg = dynamic_cast<Impl::NewImageNotification *>(
+    d->m_msg = static_cast<Impl::NewImageNotification *>(
         d->m_queue.waitDequeueNotification(d->m_opts.grabTimeOutMs));
     return d->m_msg != nullptr;
 }
