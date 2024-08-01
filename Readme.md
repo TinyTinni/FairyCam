@@ -42,8 +42,10 @@ FairyCam provides a new class `FairyCam::AnyCamera` which is an interface of `cv
 
 An example using dynamic polymorphism where you can change the camera at runtime:
  ```cpp
-#include <FairyCam/AnyCamera.hpp>
-#include <FairyCam/FileCamera.hpp>
+ import FairyCam;
+// or, if you don't use modules
+// #include <FairyCam/AnyCamera.hpp>
+// #include <FairyCam/FileCamera.hpp>
 
 int startSystem(FairyCam::AnyCamera cam)
 {
@@ -78,10 +80,10 @@ int main()
  You can also use the `IsAnyCamera` concept for compile time polymorphism. This method generates more code, but will not use any virtual calls or pointer indirections.
 
 ```cpp
-#include <FairyCam/IsAnyCamera.hpp>
-#include <FairyCam/FileCamera.hpp>
-//or if you use modules
 import FairyCam;
+// or, if you don't use modules
+// #include <FairyCam/IsAnyCamera.hpp>
+// #include <FairyCam/FileCamera.hpp>
 
 // Template with concept instead of runtime polymorphism.
 // It eliminates the virtual calls and indirection of AnyCamera
@@ -114,7 +116,7 @@ int main()
 ```
 
 
- For more examples and usage, see [in the tests directory](./tests).
+ For more examples and usage, see [in the tests directory](./tests). 
  Remark: Tests uses C++20 modules with CMake. Please have a look at this [comment](https://github.com/TinyTinni/FairyCam/pull/4#issuecomment-2169859784) for CMake Module Support.
 
 ### Camera Error Testing
