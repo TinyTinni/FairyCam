@@ -80,6 +80,8 @@ int main()
 ```cpp
 #include <FairyCam/IsAnyCamera.hpp>
 #include <FairyCam/FileCamera.hpp>
+//or if you use modules
+import FairyCam;
 
 // Template with concept instead of runtime polymorphism.
 // It eliminates the virtual calls and indirection of AnyCamera
@@ -113,6 +115,7 @@ int main()
 
 
  For more examples and usage, see [in the tests directory](./tests).
+ Remark: Tests uses C++20 modules with CMake. Please have a look at this [comment](https://github.com/TinyTinni/FairyCam/pull/4#issuecomment-2169859784) for CMake Module Support.
 
 ### Camera Error Testing
 

@@ -28,8 +28,8 @@ jobs:
           #- windows-2022
         compiler:
           # you can specify the version after `-` like "llvm-15.0.2".
-          - llvm-17
-          - gcc-13
+          - llvm-18
+          #- gcc-14
         build_type:
           - Release
         include:
