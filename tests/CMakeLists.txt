@@ -1,4 +1,3 @@
-
 find_package(OpenCV REQUIRED)
 find_package(Poco REQUIRED Foundation Net)
 

@@ -58,10 +58,12 @@ target_sources(doctest PUBLIC
 add_subdirectory(src/)
 
 # tests
-include(CTest)
-enable_testing()
 if(FAIRYCAM_ENABLE_TESTING)
+    include(CTest)
+    enable_testing()
+
     add_subdirectory(tests)
+    
     if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC" AND NOT APPLE)
         add_subdirectory(fuzzer_example)
     endif()
