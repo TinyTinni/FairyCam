@@ -60,7 +60,7 @@ class BernoulliSequence : public Sequence
     {
     }
 
-    BernoulliSequence(int seed, Options opts)
+    BernoulliSequence(unsigned seed, Options opts)
         : m_is_open{std::move(opts.isOpen)},
           m_retrieve{std::move(opts.retrieve)}, m_grab{std::move(opts.grab)}
     {
@@ -74,11 +74,11 @@ class BernoulliSequence : public Sequence
   private:
     struct Probas
     {
-        std::binomial_distribution<> fail;
-        std::discrete_distribution<> exception_distribution;
+        std::binomial_distribution<unsigned> fail;
+        std::discrete_distribution<unsigned> exception_distribution;
         std::vector<std::function<void()>> exceptions;
         Probas(Fail &&f)
-            : fail{std::binomial_distribution<>{1, f.probability}},
+            : fail{std::binomial_distribution<unsigned>{1, f.probability}},
               exception_distribution{std::begin(f.weights),
                                      std::end(f.weights)},
               exceptions{std::move(f.exceptions)}

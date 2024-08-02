@@ -122,8 +122,9 @@ HttpCamera::HttpCamera(Options opts) : d(std::make_unique<Impl>(opts)) {}
 
 HttpCamera::~HttpCamera() { release(); }
 
-bool HttpCamera::open(int idx, int apiPreference,
-                      const std::vector<int> &params)
+bool HttpCamera::open([[maybe_unused]] int idx,
+                      [[maybe_unused]] int apiPreference,
+                      [[maybe_unused]] const std::vector<int> &params)
 {
     d->m_srv.start();
     d->m_started = true;
@@ -151,7 +152,7 @@ bool HttpCamera::grab()
     return d->m_msg != nullptr;
 }
 
-bool HttpCamera::retrieve(cv::OutputArray image, int flag)
+bool HttpCamera::retrieve(cv::OutputArray image, [[maybe_unused]] int flag)
 {
     if (d->m_msg == nullptr)
         return false;

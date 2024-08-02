@@ -30,7 +30,8 @@ class DirectoryCamera
   public:
     DirectoryCamera() : DirectoryCamera(Options{}) {}
     DirectoryCamera(Options opts) : m_opts{std::move(opts)} {}
-    bool open(int idx, int apiPreference, const std::vector<int> &params)
+    bool open([[maybe_unused]] int idx, [[maybe_unused]] int apiPreference,
+              [[maybe_unused]] const std::vector<int> &params)
     {
         if (!std::filesystem::is_directory(m_opts.dir))
             return false;
@@ -51,7 +52,7 @@ class DirectoryCamera
 
         return std::filesystem::exists(m_file);
     }
-    bool retrieve(cv::OutputArray image, int flag = 0)
+    bool retrieve(cv::OutputArray image, [[maybe_unused]] int flag = 0)
     {
         auto mat = cv::imread(m_file.string());
         image.assign(mat);
@@ -66,9 +67,12 @@ class DirectoryCamera
         }
         return retrieve(image);
     }
-    bool set(int propId, double value) { return false; }
-    double get(int propId) const { return -1.0; }
-    void setExceptionMode(bool enable) {}
+    bool set([[maybe_unused]] int propId, [[maybe_unused]] double value)
+    {
+        return false;
+    }
+    double get([[maybe_unused]] int propId) const { return -1.0; }
+    void setExceptionMode([[maybe_unused]] bool enable) {}
     bool getExceptionMode() const { return false; }
     DirectoryCamera &operator>>(CV_OUT cv::Mat &image)
     {
