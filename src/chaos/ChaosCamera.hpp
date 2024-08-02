@@ -70,7 +70,8 @@ class ChaosCamera
           m_error_sequence{std::make_unique<SeqT>(std::move(seq))}
     {
     }
-    bool open(int idx, int apiPreference, const std::vector<int> &params)
+    bool open([[maybe_unused]] int idx, [[maybe_unused]] int apiPreference,
+              [[maybe_unused]] const std::vector<int> &params)
     {
         if (!checkIsOpen())
             return false;
@@ -97,7 +98,7 @@ class ChaosCamera
         }
         return true;
     }
-    bool retrieve(cv::OutputArray image, int flag = 0)
+    bool retrieve(cv::OutputArray image, [[maybe_unused]] int flag = 0)
     {
         if (!isOpened())
             return false;
@@ -117,9 +118,15 @@ class ChaosCamera
             return false;
         return retrieve(image);
     }
-    bool set(int propId, double value) { return false; }
-    double get(int propId) const { return -1.0; }
-    void setExceptionMode(bool enable) noexcept { m_active_exception = enable; }
+    bool set([[maybe_unused]] int propId, [[maybe_unused]] double value)
+    {
+        return false;
+    }
+    double get([[maybe_unused]] int propId) const { return -1.0; }
+    void setExceptionMode([[maybe_unused]] bool enable) noexcept
+    {
+        m_active_exception = enable;
+    }
     bool getExceptionMode() const noexcept { return m_active_exception; }
     ChaosCamera &operator>>(CV_OUT cv::Mat &image)
     {

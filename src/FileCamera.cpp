@@ -21,7 +21,7 @@ bool FileCamera::grab()
     return std::filesystem::exists(*m_current);
 }
 
-bool FileCamera::retrieve(cv::OutputArray image, int flag)
+bool FileCamera::retrieve(cv::OutputArray image, [[maybe_unused]] int flag)
 {
     if (!m_is_open || m_current == m_opts.files.cend())
         return false;

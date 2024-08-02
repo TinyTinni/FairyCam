@@ -31,7 +31,8 @@ class MemoryCamera
           m_next{m_opts.images.cend()}
     {
     }
-    bool open(int idx, int apiPreference, const std::vector<int> &params)
+    bool open([[maybe_unused]] int idx, [[maybe_unused]] int apiPreference,
+              [[maybe_unused]] const std::vector<int> &params)
     {
         m_is_open = true;
         m_next = m_opts.images.cbegin();
@@ -47,9 +48,12 @@ class MemoryCamera
     bool grab();
     bool retrieve(cv::OutputArray image, int flag = 0);
     bool read(cv::OutputArray image);
-    bool set(int propId, double value) { return false; }
-    double get(int propId) const { return -1.0; }
-    void setExceptionMode(bool enable) {}
+    bool set([[maybe_unused]] int propId, [[maybe_unused]] double value)
+    {
+        return false;
+    }
+    double get([[maybe_unused]] int propId) const { return -1.0; }
+    void setExceptionMode([[maybe_unused]] bool enable) {}
     bool getExceptionMode() const { return false; }
     MemoryCamera &operator>>(CV_OUT cv::Mat &image)
     {

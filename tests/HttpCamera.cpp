@@ -14,9 +14,9 @@ import FairyCam;
 
 using namespace FairyCam;
 
-uint getPort()
+uint16_t getPort()
 {
-    static uint port = 5000;
+    static uint16_t port = 5000;
     return port++;
 }
 
