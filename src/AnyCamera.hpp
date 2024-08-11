@@ -32,12 +32,16 @@ class AnyCamera
         virtual Base &operator>>(cv::UMat &image) = 0;
     };
 
-    template <IsAnyCamera CameraType> class Model : public Base
+    template <IsAnyCamera CameraType> class Model final : public Base
     {
       public:
         CameraType m_camera;
 
-        virtual ~Model(){};
+        Model(const Model &) = delete;
+        Model &operator=(const Model &) = delete;
+        Model(const Model &&) = delete;
+        Model &operator=(const Model &&) = delete;
+        virtual ~Model() = default;
         template <typename... Args>
         Model(Args &&...args) : m_camera{std::forward<Args...>(args...)}
         {
@@ -77,10 +81,14 @@ class AnyCamera
         }
         bool getExceptionMode() const override final
         {
+#if CV_VERSION_MAJOR == 4 && CV_VERSION_MINOR < 10
             // required, as some opencv version do not support it
             // https://github.com/opencv/opencv/pull/25062
             return const_cast<CameraType *>(std::addressof(m_camera))
                 ->getExceptionMode();
+#else
+            return m_camera.getExceptionMode();
+#endif
         }
         Base &operator>>(cv::Mat &image) override final
         {
