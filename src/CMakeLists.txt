@@ -51,6 +51,12 @@ install(TARGETS FairyCam
 
 set_target_properties(FairyCam PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
+target_compile_options(FairyCam PRIVATE
+     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
+          -Wall -Wextra -Wconversion -pedantic-errors -Wsign-conversion>
+     $<$<CXX_COMPILER_ID:MSVC>:
+          /W4>)
+
 include(GNUInstallDirs)
 install(TARGETS FairyCam
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

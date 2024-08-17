@@ -77,6 +77,7 @@ jobs:
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
           -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
           -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          -DFAIRYCAM_ENABLE_TESTING=ON
           ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
 
       - name: Build
