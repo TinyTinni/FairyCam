@@ -94,6 +94,7 @@ jobs:
       - uses: whisperity/codechecker-analysis-action@v1
         id: codechecker
         with:
+          llvm-version: 18
           logfile: ${{ github.workspace }}/build/compile_commands.json
 
       - uses: actions/upload-artifact@v2
