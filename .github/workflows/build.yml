@@ -94,7 +94,7 @@ jobs:
       - uses: whisperity/codechecker-analysis-action@v1
         id: codechecker
         with:
-          logfile: ${{ github.workspace }}/Build/compile_commands.json
+          logfile: ${{ github.workspace }}/build/compile_commands.json
 
       - uses: actions/upload-artifact@v2
         with:
