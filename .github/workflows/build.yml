@@ -93,11 +93,13 @@ jobs:
 
       - uses: whisperity/codechecker-analysis-action@v1
         id: codechecker
+        if: matrix.os == 'ubuntu-latest'
         with:
           llvm-version: 18
           logfile: ${{ github.workspace }}/build/compile_commands.json
 
       - uses: actions/upload-artifact@v2
+        if: matrix.os == 'ubuntu-latest'
         with:
           name: "CodeChecker Bug Reports"
           path: ${{ steps.codechecker.outputs.result-html-dir }}
