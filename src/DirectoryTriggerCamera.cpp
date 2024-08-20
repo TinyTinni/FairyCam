@@ -42,8 +42,9 @@ DirectoryTriggerCamera::DirectoryTriggerCamera(Options opts)
 
 DirectoryTriggerCamera::~DirectoryTriggerCamera() { release(); }
 
-bool DirectoryTriggerCamera::open(int idx, int apiPreference,
-                                  const std::vector<int> &params)
+bool DirectoryTriggerCamera::open(
+    [[maybe_unused]] int idx, [[maybe_unused]] int apiPreference,
+    [[maybe_unused]] const std::vector<int> &params)
 {
     if (!std::filesystem::is_directory(d->m_opts.dir))
         return false;
@@ -79,7 +80,8 @@ bool DirectoryTriggerCamera::grab()
     return d->m_msg != nullptr;
 }
 
-bool DirectoryTriggerCamera::retrieve(cv::OutputArray image, int flag)
+bool DirectoryTriggerCamera::retrieve(cv::OutputArray image,
+                                      [[maybe_unused]] int flag)
 {
     if (!isOpened())
         return false;

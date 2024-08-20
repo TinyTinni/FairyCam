@@ -21,7 +21,7 @@ bool MemoryCamera::grab()
     return !m_current->empty();
 }
 
-bool MemoryCamera::retrieve(cv::OutputArray image, int flag)
+bool MemoryCamera::retrieve(cv::OutputArray image,[[maybe_unused]] int flag)
 {
     if (!m_is_open || m_current == m_opts.images.cend())
         return false;

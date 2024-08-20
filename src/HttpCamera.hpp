@@ -12,7 +12,7 @@ class HttpCamera
   public:
     struct Options
     {
-        uint32_t port = 5001;
+        uint16_t port = 5001;
         int grabTimeOutMs = 10000;
     };
 
@@ -25,9 +25,12 @@ class HttpCamera
     bool grab();
     bool retrieve(cv::OutputArray image, int flag = 0);
     bool read(cv::OutputArray image);
-    bool set(int propId, double value) { return false; }
-    double get(int propId) const noexcept { return -1.0; }
-    void setExceptionMode(bool enable) {}
+    bool set([[maybe_unused]] int propId, [[maybe_unused]] double value)
+    {
+        return false;
+    }
+    double get([[maybe_unused]] int propId) const noexcept { return -1.0; }
+    void setExceptionMode([[maybe_unused]] bool enable) {}
     bool getExceptionMode() const noexcept { return false; }
     HttpCamera &operator>>(cv::Mat &image)
     {
