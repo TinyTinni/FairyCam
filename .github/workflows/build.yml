@@ -54,7 +54,7 @@ jobs:
 
       - name: Install dependencies (linux)
         run: sudo apt update && sudo apt install ninja-build libopencv-dev libpoco-dev
-        if: matrix.os == 'ubuntu-24.04' && matrix.compiler != 'gcc-14'
+        if: matrix.os == 'ubuntu-24.04'
       - name: Install dependencies (windows)
         run: |
           choco install opencv --version 4.10.0 -y --package-parameters '/InstallationPath:C:\opencv /Environment'
@@ -68,6 +68,7 @@ jobs:
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
           ninja: true
           ccache: true
+        if: matrix.compiler != 'gcc-14'
 
       - name: Configure CMake
         run:
