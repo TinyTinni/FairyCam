@@ -68,7 +68,6 @@ jobs:
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
           ninja: true
           ccache: true
-        if: matrix.compiler != 'gcc-14'
 
       - name: Configure CMake
         run:
