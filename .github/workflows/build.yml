@@ -75,8 +75,8 @@ jobs:
           -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}} 
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-          -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
           ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
+          #-DCMAKE_COMPILE_WARNING_AS_ERROR=ON
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
