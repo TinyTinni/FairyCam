@@ -4,6 +4,7 @@
 #include <opencv2/videoio.hpp>
 
 #include <filesystem>
+#include <optional> //required by GCC14
 
 import FairyCam;
 
