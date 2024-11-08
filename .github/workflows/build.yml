@@ -55,7 +55,9 @@ jobs:
       - name: Install dependencies (linux)
         run: |
           sudo add-apt-repository universe 
-          sudo apt update && sudo apt upgrade && sudo apt install ninja-build libopencv-dev libpoco-dev
+          sudo apt-get update
+          sudo apt-get install ninja-build libopencv-dev libpoco-dev
+          sudo apt-get install gcc-14
         if: contains(matrix.os, 'ubuntu' )
         
       - name: Install dependencies (windows)
