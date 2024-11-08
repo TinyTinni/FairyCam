@@ -53,8 +53,11 @@ jobs:
             ${{ runner.os }}-${{ matrix.compiler }}
 
       - name: Install dependencies (linux)
-        run: sudo apt update && sudo apt upgrade && sudo apt install ninja-build libopencv-dev libpoco-dev
+        run: |
+          sudo add-apt-repository universe 
+          sudo apt update && sudo apt upgrade && sudo apt install ninja-build libopencv-dev libpoco-dev
         if: contains(matrix.os, 'ubuntu' )
+        
       - name: Install dependencies (windows)
         run: |
           choco install opencv --version 4.10.0 -y --package-parameters '/InstallationPath:C:\opencv /Environment'
