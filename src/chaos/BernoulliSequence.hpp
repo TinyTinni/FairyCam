@@ -40,8 +40,6 @@ class BernoulliSequence : public Sequence
         }
         template <std::invocable<> Func> Fail &with(Func f, double weight = 1.0)
         {
-            if (!f)
-                return *this;
             exceptions.push_back(std::move(f));
             weights.push_back(weight);
             return *this;
