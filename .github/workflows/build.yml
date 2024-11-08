@@ -56,8 +56,11 @@ jobs:
         run: |
           sudo add-apt-repository universe
           sudo apt-get update
-          sudo apt-get install ninja-build libopencv-dev libpoco-dev
-          sudo apt-get install -t universe gcc-14
+          sudo apt-get install ninja-build libopencv-dev libpoco-dev 
+        if: contains(matrix.os, 'ubuntu' )
+
+      - name: Install Gcc
+        run: sudo apt-get install gcc-14
         if: contains(matrix.os, 'ubuntu' )
         
       - name: Install dependencies (windows)
