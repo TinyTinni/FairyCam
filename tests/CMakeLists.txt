@@ -30,4 +30,4 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
    target_link_libraries(Tests PUBLIC -fsanitize=address,undefined)
 endif()
 
-add_test(NAME Tests COMMAND Tests)
+add_test(NAME Tests COMMAND Tests --order-by=rand)
