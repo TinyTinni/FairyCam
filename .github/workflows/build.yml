@@ -54,10 +54,10 @@ jobs:
 
       - name: Install dependencies (linux)
         run: |
-          sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
+          sudo add-apt-repository universe
           sudo apt-get update
           sudo apt-get install ninja-build libopencv-dev libpoco-dev
-          sudo apt-get install gcc-14
+          sudo apt-get install -t universe gcc-14
         if: contains(matrix.os, 'ubuntu' )
         
       - name: Install dependencies (windows)
