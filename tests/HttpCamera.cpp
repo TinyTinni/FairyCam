@@ -34,6 +34,7 @@ bool sendFileImage(Poco::Net::HTTPClientSession &client, std::string_view path)
 
     Poco::Net::HTTPResponse response;
     client.receiveResponse(response);
+    CAPTURE(response.getStatus());
     bool result = response.getStatus() ==
                   Poco::Net::HTTPResponse::HTTPStatus::HTTP_ACCEPTED;
     return result;
@@ -49,9 +50,8 @@ bool sendInvalidImage(Poco::Net::HTTPClientSession &client)
 
     Poco::Net::HTTPResponse response;
     client.receiveResponse(response);
-    bool result = response.getStatus() ==
-                  Poco::Net::HTTPResponse::HTTPStatus::HTTP_BAD_REQUEST;
-    return result;
+    return response.getStatus() ==
+           Poco::Net::HTTPResponse::HTTPStatus::HTTP_BAD_REQUEST;
 }
 
 TEST_SUITE("HttpCamera")
@@ -123,6 +123,38 @@ TEST_SUITE("HttpCamera")
             CHECK(m.empty());
         }
     }
+
+    TEST_CASE("When queue is full, nothing should be accepted")
+    {
+        const auto port = getPort();
+        AnyCamera cam(
+            AnyCamera::create<HttpCamera>({.port = port, .grabTimeOutMs = 0}));
+        Poco::Net::HTTPClientSession client("127.0.0.1", port);
+
+        REQUIRE(cam.open(0, 0, {}));
+        REQUIRE(cam.isOpened());
+
+        for (int i = 0; i < 100; ++i)
+        {
+            sendFileImage(client, TEST_DATA "test.png");
+        }
+
+        // limit reached, reject all
+        for (int i = 0; i < 3; ++i)
+        {
+            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST,
+                                           "/image",
+                                           Poco::Net::HTTPMessage::HTTP_1_1);
+            client.sendRequest(request);
+
+            Poco::Net::HTTPResponse response;
+            client.receiveResponse(response);
+            REQUIRE(
+                response.getStatus() ==
+                Poco::Net::HTTPResponse::HTTPStatus::HTTP_INSUFFICIENT_STORAGE);
+        }
+    }
+
     TEST_CASE("transfer multiple images out of queue")
     {
         for (auto n_images : std::vector{10})

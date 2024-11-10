@@ -56,6 +56,7 @@ target_sources(doctest PUBLIC
 
 #######
 add_subdirectory(src/)
+add_subdirectory(proptest_example)
 
 # tests
 if(FAIRYCAM_ENABLE_TESTING)

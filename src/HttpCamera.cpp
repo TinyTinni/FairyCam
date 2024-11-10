@@ -34,12 +34,22 @@ struct HttpCamera::Impl
     class ImageRequestHandler : public HTTPRequestHandler
     {
         Poco::NotificationQueue &m_queue;
+        constexpr static int max_queue_size = 100;
 
       public:
         ImageRequestHandler(Poco::NotificationQueue &queue) : m_queue{queue} {}
 
         void setImage(HTTPServerRequest &request, HTTPServerResponse &response)
         {
+            if (m_queue.size() >= max_queue_size)
+            {
+                response.setStatusAndReason(
+                    HTTPResponse::HTTP_INSUFFICIENT_STORAGE,
+                    "Image queue is full. Consume or delete images. You can "
+                    "delete the whole queue with 'POST /delete'.");
+                return;
+            }
+
             std::vector<char> buffer(
                 std::istreambuf_iterator<char>(request.stream()), {});
             auto notify = Poco::makeAuto<NewImageNotification>(
@@ -47,7 +57,8 @@ struct HttpCamera::Impl
 
             if (notify->image().empty())
             {
-                response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
+                response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST,
+                                            "Could not decode sent image.");
             }
             else
             {
