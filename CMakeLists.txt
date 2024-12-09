@@ -23,6 +23,7 @@ if (NOT ${Poco_FOUND})
     URL https://github.com/pocoproject/poco/archive/refs/tags/poco-1.14.0-release.tar.gz
     OPTIONS
     "BUILD_SHARED_LIBS OFF"
+    "POCO_STATIC ON"
     "ENABLE_FOUNDATION ON"
     "ENABLE_NET ON"
     "ENABLE_NETSSL OFF"
