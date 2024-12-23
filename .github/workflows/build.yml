@@ -30,7 +30,7 @@ jobs:
           - llvm-18
           - gcc-14
         build_type:
-          - Release
+          - RelWithDebInfo
         include:
           # Windows msvc builds
           - os: windows-latest
