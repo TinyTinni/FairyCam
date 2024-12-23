@@ -30,12 +30,12 @@ jobs:
           - llvm-18
           - gcc-14
         build_type:
-          - RelWithDebInfo
+          - Release
         include:
           # Windows msvc builds
           - os: windows-latest
             compiler: msvc
-            build_type: Release
+            build_type: RelWithDebInfo # debug infos for asan
 
     steps:
       - uses: actions/checkout@v4
