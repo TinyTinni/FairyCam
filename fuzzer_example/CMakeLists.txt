@@ -19,6 +19,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     target_link_libraries(Example_Fuzzer PUBLIC -fsanitize=address,undefined)
 elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
     target_compile_options(Example_Fuzzer PRIVATE /fsanitize=address /fsanitize=fuzzer)
+    add_compile_options(/fsanitize=address)
     target_compile_definitions(Example_Fuzzer PRIVATE "-D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS")
 endif()
 
