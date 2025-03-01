@@ -2,7 +2,7 @@ find_package(OpenCV REQUIRED)
 find_package(Poco REQUIRED Foundation Net)
 
 
-add_library(Tests_lib
+add_library(Tests_lib OBJECT
      FileCamera.cpp
      DirectoryCamera.cpp
      HttpCamera.cpp
