@@ -2,7 +2,7 @@ find_package(OpenCV REQUIRED)
 find_package(Poco REQUIRED Foundation Net)
 
 
-add_library(Tests_lib
+add_library(Tests_lib OBJECT
      FileCamera.cpp
      DirectoryCamera.cpp
      HttpCamera.cpp
@@ -37,4 +37,5 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
      add_executable(Tests_ThreadSanitizer main.cpp)     
      target_link_libraries(Tests_ThreadSanitizer PUBLIC Tests_lib -fsanitize=thread)
      add_test(NAME Tests_ThreadSanitizer COMMAND Tests_ThreadSanitizer --order-by=rand)
+     set_tests_properties(Tests_ThreadSanitizer PROPERTIES ENVIRONMENT "TSAN_OPTIONS=suppressions=${CMAKE_CURRENT_SOURCE_DIR}/tsan_suppressions.txt")
 endif()

@@ -1,0 +1,2 @@
+# not instrumented library
+called_from_lib:libgdal.so
