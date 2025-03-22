@@ -1,6 +1,7 @@
 #include "ports.hpp"
 #include "system.hpp"
 #include <HttpCamera.hpp>
+#include <chrono>
 #include <iostream>
 
 std::array<std::unique_ptr<CameraActor>, NUM_CAMERAS>
@@ -42,7 +43,7 @@ class System
 
     struct RunResult
     {
-        long images = 0;
+        int64_t images = 0;
     };
 
     void start()
