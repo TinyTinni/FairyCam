@@ -7,6 +7,7 @@ on:
     branches:
       - main
       - master
+      - clang-tidy
 
 env:
   CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
@@ -71,6 +72,7 @@ jobs:
           vcvarsall: ${{ contains(matrix.os, 'windows' )}}
           ninja: true
           ccache: true
+          clang-tidy: true
 
       - name: Configure CMake
         run:
@@ -80,6 +82,7 @@ jobs:
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
           -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
           -DFAIRYCAM_ENABLE_TESTING=ON
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
           ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
 
       - name: Build
@@ -89,6 +92,9 @@ jobs:
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{matrix.build_type}} --output-on-failure
+      - name: Clang-tidy
+        run: |
+          run-clang-tidy -p build -header-filter .* 
       - name: ccache stats
         run: |
           ccache -s

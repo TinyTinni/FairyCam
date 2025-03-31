@@ -49,11 +49,7 @@ endif()
 
 # doctest
 add_library(doctest INTERFACE)
-target_sources(doctest PUBLIC
-  FILE_SET HEADERS
-    BASE_DIRS doctest
-    FILES doctest/doctest.h
-)
+target_include_directories(doctest SYSTEM INTERFACE doctest)
 
 #######
 add_subdirectory(src/)
