@@ -61,7 +61,7 @@ jobs:
         
       - name: Install dependencies (windows)
         run: |
-          choco install opencv --version 4.10.0 -y --package-parameters '/InstallationPath:C:\opencv /Environment'
+          choco install opencv --version 4.11.0 -y --package-parameters '/InstallationPath:C:\opencv /Environment'
           echo "C:\opencv\opencv\build\x64\vc16\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         if: contains(matrix.os, 'windows' )
 
@@ -82,7 +82,7 @@ jobs:
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
           -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
           -DFAIRYCAM_ENABLE_TESTING=ON
-          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON 
           ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
 
       - name: Build
