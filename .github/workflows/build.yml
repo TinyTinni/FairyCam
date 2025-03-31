@@ -34,7 +34,7 @@ jobs:
           - Release
         include:
           # Windows msvc builds
-          - os: windows-2022
+          - os: windows-latest
             compiler: msvc
             build_type: Release
 
@@ -63,6 +63,14 @@ jobs:
         run: |
           choco install opencv --version 4.11.0 -y --package-parameters '/InstallationPath:C:\opencv /Environment'
           echo "C:\opencv\opencv\build\x64\vc16\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          dir "C:\opencv"
+          dir "C:\opencv\opencv"
+          dir "C:\opencv\opencv\build"
+          dir "C:\opencv\opencv\build\x64"
+          dir "C:\opencv\opencv\build\x64\vc16"
+          dir "C:\opencv\opencv\build\x64\vc16\bin"
+          refreshenv
+          
         if: contains(matrix.os, 'windows' )
 
       - name: Setup Cpp
