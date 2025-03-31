@@ -69,8 +69,7 @@ jobs:
           dir "C:\opencv\opencv\build\x64"
           dir "C:\opencv\opencv\build\x64\vc16"
           dir "C:\opencv\opencv\build\x64\vc16\bin"
-          refreshenv
-          
+          C:\opencv\opencv\build\setup_vars_opencv4.cmd
         if: contains(matrix.os, 'windows' )
 
       - name: Setup Cpp
@@ -91,7 +90,7 @@ jobs:
           -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
           -DFAIRYCAM_ENABLE_TESTING=ON
           -DCMAKE_EXPORT_COMPILE_COMMANDS=ON 
-          ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/"' || '' }}
+          ${{ matrix.os == 'windows-latest' && '-DOpenCV_DIR="C:/opencv/opencv/build/x64/"' || '' }}
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
