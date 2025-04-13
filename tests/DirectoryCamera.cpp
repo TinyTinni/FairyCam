@@ -1,6 +1,7 @@
 #include <doctest.h>
 #include <filesystem>
 
+#include <string>
 #include <vector>
 
 #include <opencv2/core.hpp>
@@ -52,9 +53,9 @@ TEST_SUITE("DirectoryCamera")
 
             REQUIRE_FALSE(cam.open(0, 0, {}));
             CHECK_FALSE(cam.isOpened());
-            cv::Mat m;
-            REQUIRE_FALSE(cam.read(m));
-            CHECK(m.empty());
+            cv::Mat loadedMat;
+            REQUIRE_FALSE(cam.read(loadedMat));
+            CHECK(loadedMat.empty());
         }
     }
 }

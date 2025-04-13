@@ -29,7 +29,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     FairyCam::MemoryCamera cam(
         {.images = {cv::Mat(1, 1, CV_8UC1)}, .circular = true});
 
-    auto span = std::span(data, data + size);
+    auto span = std::span(data, size);
     auto chaosCam = FairyCam::ChaosCamera(std::move(cam),
                                           FairyCam::BinaryBlobSequence(span));
     try

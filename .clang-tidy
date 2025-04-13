@@ -1,6 +1,35 @@
 ---
-Checks: '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-modernize-use-trailing-return-type,-llvm-*,-llvmlibc-*'
-CheckOptions: [{ key: misc-non-private-member-variables-in-classes, value: IgnoreClassesWithAllMemberVariablesBeingPublic }]
-WarningsAsErrors: 'true'
+#Checks: '*,
+#        -fuchsia-*,
+#        -google-*,
+#        -zircon-*,
+#        -abseil-*,
+#        -llvm-*,
+#        -llvmlibc-*,
+#        -hicpp-*,
+#        -altera-*,
+#        -misc-*,
+#        -modernize-use-trailing-return-type,
+#        -readability-braces-around-statements,
+#        -readability-function-cognitive-complexity
+#        ' #readability-function-cognitive-complexity disabled due to doctest
+Checks: '
+        clang-analyzer-*,
+        cppcoreguidelines-*,
+        -cppcoreguidelines-avoid-magic-numbers,
+        cert-*,
+        bugprone-*,
+        -bugprone-easily-swappable-parameters,
+        -bugprone-empty-catch,
+        hicpp-*,
+        -hicpp-braces-around-statements,
+        -hicpp-exception-baseclass,
+        performance-*,
+        openmp-*
+        '
+CheckOptions:
+    performance-move-const-arg.CheckTriviallyCopyableMove: False
+    hicpp-move-const-arg.CheckTriviallyCopyableMove: False
+WarningsAsErrors: '*'
 HeaderFilterRegex: ''
 FormatStyle: none

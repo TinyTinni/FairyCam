@@ -101,7 +101,7 @@ jobs:
         run: ctest -C ${{matrix.build_type}} --output-on-failure
       - name: Clang-tidy
         run: |
-          run-clang-tidy -p build -header-filter .* 
+          run-clang-tidy -p build -warnings-as-errors *
       - name: ccache stats
         run: |
           ccache -s

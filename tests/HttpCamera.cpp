@@ -183,7 +183,7 @@ TEST_SUITE("HttpCamera")
 
     TEST_CASE("transfer multiple valid and invalid images out of queue")
     {
-        for (auto n_images : std::vector{10})
+        for (const auto n_images : std::vector{10})
         {
             CAPTURE(n_images);
             const auto port = getPort();
@@ -198,7 +198,7 @@ TEST_SUITE("HttpCamera")
             for (auto i = 0; i < n_images; ++i)
             {
                 CAPTURE(i);
-                if (i % 2)
+                if ((i % 2) != 0)
                 {
                     REQUIRE(sendFileImage(client, TEST_DATA "test.png"));
                     REQUIRE(cam.read(m));
