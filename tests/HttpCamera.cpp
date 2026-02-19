@@ -27,10 +27,12 @@ bool sendFileImage(Poco::Net::HTTPClientSession &client, std::string_view path)
     if (!file.is_open())
         return false;
 
+    std::string body;
+    Poco::StreamCopier::copyToString(file, body);
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/image",
                                    Poco::Net::HTTPMessage::HTTP_1_1);
-    auto &ostream = client.sendRequest(request);
-    Poco::StreamCopier::copyStream(file, ostream);
+    request.setContentLength64(static_cast<int64_t>(body.size()));
+    client.sendRequest(request) << std::move(body);
 
     Poco::Net::HTTPResponse response;
     client.receiveResponse(response);
@@ -44,8 +46,11 @@ bool sendInvalidImage(Poco::Net::HTTPClientSession &client)
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/image",
                                    Poco::Net::HTTPMessage::HTTP_1_1);
+
+    constexpr static std::string_view invalidString = "invalid image string";
+    request.setContentLength(static_cast<int>(invalidString.size()));
     auto &ostream = client.sendRequest(request);
-    ostream << "invalid image string";
+    ostream << invalidString;
 
     Poco::Net::HTTPResponse response;
     client.receiveResponse(response);
