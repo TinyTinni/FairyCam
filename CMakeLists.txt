@@ -19,31 +19,14 @@ if (NOT ${Poco_FOUND})
   include(cmake/CPM.cmake)
   CPMAddPackage(
     NAME Poco
-    VERSION 1.14.1
-    URL https://github.com/pocoproject/poco/archive/refs/tags/poco-1.14.1-release.tar.gz
+    VERSION 1.15.0
+    URL https://github.com/pocoproject/poco/releases/download/poco-1.15.0-release/poco-1.15.0.tar.gz
     OPTIONS
     "BUILD_SHARED_LIBS OFF"
     "POCO_STATIC ON"
     "ENABLE_FOUNDATION ON"
     "ENABLE_NET ON"
-    "ENABLE_NETSSL OFF"
-    "ENABLE_XML OFF"
-    "ENABLE_DATA_SQLITE OFF"
-    "ENABLE_ENCODINGS OFF"
-    "ENABLE_ENCODINGS_COMPILER OFF"
-    "ENABLE_UTIL OFF"
-    "ENABLE_JSON OFF"
-    "ENABLE_MONGODB OFF"
-    "ENABLE_REDIS OFF"
-    "ENABLE_PROMETHEUS OFF"
-    "ENABLE_JWT OFF"
-    "ENABLE_CRYPTO OFF"
-    "ENABLE_DATA OFF"
-    "ENABLE_ACTIVERECORD OFF"
-    "ENABLE_ACTIVERECORD_COMPILER OFF"
-    "ENABLE_ZIP OFF"
-    "ENABLE_PAGECOMPILER OFF"
-    "ENABLE_PAGECOMPILER_FILE2PAGE OFF"
+    "POCO_MINIMAL_BUILD ON"
     )
 endif()
 
